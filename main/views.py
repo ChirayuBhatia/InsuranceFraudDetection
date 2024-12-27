@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from .utils import TrainModel, Predict
-from django.http import JsonResponse
 from .models import TrainedModels
 from django.urls import reverse
 import pickle
@@ -30,7 +29,6 @@ class TrainView(TemplateView):
                     uploaded_file, ['policy_number', 'policy_bind_date', 'insured_zip', 'policy_state',
                                     'incident_location', 'incident_date', 'incident_state', 'incident_city',
                                     'insured_hobbies', 'auto_make', 'auto_model', 'auto_year'])
-                print(feature_columns, label_encoders, scaler, result)
                 save_model = TrainedModels.objects.create(
                     name=name.title(),
                     model=pickle.dumps(model),
@@ -40,12 +38,12 @@ class TrainView(TemplateView):
                     result=pickle.dumps(result)
                 )
                 save_model.save()
-                return JsonResponse({'message': 'Training Successful'}, status=200)
+                return render(request, 'Response.html', {'message': 'Successfully Trained', 'type': 0})
                 # except Exception as e:
                 #     print(e)
                 #     return JsonResponse({'message': 'Some error occurred. Contact Administrator!!'})
             else:
-                return JsonResponse({'message': 'Unsupported File Type'}, status=500)
+                return render(request, 'Response.html', {'message': 'Some Error Occurred', 'type': 1})
 
 
 class PredictView(TemplateView):
@@ -54,19 +52,21 @@ class PredictView(TemplateView):
 
     def post(self, request):
         db = self.model.objects.values().first()
-        data = [request.post[k] for k in db['featured_columns']]
+        data = [request.POST.get(k) for k in json.loads(db['featured_columns'])]
         model = pickle.loads(db['model'])
         label_encoders = pickle.loads(db['label_encoders'])
         scaler = pickle.loads(db['scaler'])
         for i in range(len(data)):
             try:
                 data[i] = float(data[i])
-            except ValueError:
+            except Exception:
                 continue
         prediction = Predict(data, model, label_encoders, scaler)
         res = prediction.predict(eval(db['featured_columns']))
-        print(res)
-        return JsonResponse({'prediction': res}, status=200)
+        if res:
+            return render(request, 'Response.html', {'type': 1, 'message': 'Fraud !'})
+        else:
+            return render(request, 'Response.html', {'type': 0, 'message': 'Valid !'})
 
 
 def login_view(request):

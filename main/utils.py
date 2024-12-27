@@ -85,7 +85,6 @@ class Predict:
         # Scale the new data
         new_data = self.scaler.transform(data)
         prediction = self.model.predict(new_data)
-        print("Prediction for the provided data:", "Fraudulent" if prediction[0] == 1 else "Valid")
-        return "Fraudulent" if prediction[0] == 1 else "Valid"
+        return prediction[0] == 1
 
 
