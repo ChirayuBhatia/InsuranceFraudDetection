@@ -1,53 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Predict | Insurance Fraud Buster</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    </head>
-    <body>
-        <div class="container">
+{% extends 'base.html' %}
+
+{% block title %}PREDICT{% endblock %}
+
+{% block style %}
+    <style>
+        .container {
+            background-color: white;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+        <div class="container p-5 my-5 rounded">
             <form method="post">
                 {% csrf_token %}
                 <div class="row mb-3">
-                    <label for="months_as_customer" class="col-sm-2 col-form-label">months_as_customer</label>
+                    <label for="months_as_customer" class="col-sm-2 col-form-label">Months as Customer</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="months_as_customer" name="months_as_customer">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="age" class="col-sm-2 col-form-label">age</label>
+                    <label for="age" class="col-sm-2 col-form-label">Age</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="age" name="age">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="policy_csl" class="col-sm-2 col-form-label">policy_csl</label>
+                    <label for="policy_csl" class="col-sm-2 col-form-label">Policy CSL</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="policy_csl" name="policy_csl" step="0.01">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="policy_deductable" class="col-sm-2 col-form-label">policy_deductable</label>
+                    <label for="policy_deductable" class="col-sm-2 col-form-label">Policy Deductable</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="policy_deductable" name="policy_deductable" step="0.01">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="policy_annual_premium" class="col-sm-2 col-form-label">policy_annual_premium</label>
+                    <label for="policy_annual_premium" class="col-sm-2 col-form-label">Policy Annual Premium</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="policy_annual_premium" name="policy_annual_premium" step="0.01">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="umbrella_limit" class="col-sm-2 col-form-label">umbrella_limit</label>
+                    <label for="umbrella_limit" class="col-sm-2 col-form-label">Umbrella Limit</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="umbrella_limit" name="umbrella_limit" step="0.01">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="insured_sex" class="col-sm-2 col-form-label">insured_sex</label>
+                    <label for="insured_sex" class="col-sm-2 col-form-label">Insured Sex</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="insured_sex">
                             <option selected>Open this select menu</option>
@@ -57,7 +61,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="insured_education_level" class="col-sm-2 col-form-label">insured_education_level</label>
+                    <label for="insured_education_level" class="col-sm-2 col-form-label">Insured Education Level</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="insured_education_level">
                             <option selected>Open this select menu</option>
@@ -72,7 +76,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="insured_education_level" class="col-sm-2 col-form-label">insured_occupation</label>
+                    <label for="insured_education_level" class="col-sm-2 col-form-label">Insured Occupation</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="insured_occupation">
                             <option selected>Open this select menu</option>
@@ -94,7 +98,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="insured_relationship" class="col-sm-2 col-form-label">insured_relationship</label>
+                    <label for="insured_relationship" class="col-sm-2 col-form-label">Insured Relationship</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="insured_relationship">
                             <option selected>Open this select menu</option>
@@ -108,19 +112,19 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="capital-gains" class="col-sm-2 col-form-label">capital-gains</label>
+                    <label for="capital-gains" class="col-sm-2 col-form-label">Capital Gains</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="capital-gains" name="capital-gains" step="0.01">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="capital-loss" class="col-sm-2 col-form-label">capital-loss</label>
+                    <label for="capital-loss" class="col-sm-2 col-form-label">Capital Loss</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="capital-loss" name="capital-loss" step="0.01">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="incident_type" class="col-sm-2 col-form-label">incident_type</label>
+                    <label for="incident_type" class="col-sm-2 col-form-label">Incident Type</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="incident_type">
                             <option selected>Open this select menu</option>
@@ -132,7 +136,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="collision_type" class="col-sm-2 col-form-label">collision_type</label>
+                    <label for="collision_type" class="col-sm-2 col-form-label">Collision Type</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="collision_type">
                             <option selected>Open this select menu</option>
@@ -144,7 +148,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="incident_severity" class="col-sm-2 col-form-label">incident_severity</label>
+                    <label for="incident_severity" class="col-sm-2 col-form-label">Incident Severity</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="incident_severity">
                             <option selected>Open this select menu</option>
@@ -156,7 +160,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="authorities_contacted" class="col-sm-2 col-form-label">authorities_contacted</label>
+                    <label for="authorities_contacted" class="col-sm-2 col-form-label">Authorities Contacted</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="authorities_contacted">
                             <option selected>Open this select menu</option>
@@ -169,19 +173,19 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="incident_hour_of_the_day" class="col-sm-2 col-form-label">incident_hour_of_the_day</label>
+                    <label for="incident_hour_of_the_day" class="col-sm-2 col-form-label">Incident Hour of the Day</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="incident_hour_of_the_day" name="incident_hour_of_the_day">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="number_of_vehicles_involved" class="col-sm-2 col-form-label">number_of_vehicles_involved</label>
+                    <label for="number_of_vehicles_involved" class="col-sm-2 col-form-label">Number of Vehicles Involved</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="number_of_vehicles_involved" name="number_of_vehicles_involved">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="property_damage" class="col-sm-2 col-form-label">property_damage</label>
+                    <label for="property_damage" class="col-sm-2 col-form-label">Property Damage</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="property_damage">
                             <option selected>Open this select menu</option>
@@ -192,19 +196,19 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="bodily_injuries" class="col-sm-2 col-form-label">bodily_injuries</label>
+                    <label for="bodily_injuries" class="col-sm-2 col-form-label">Bodily Injuries</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="bodily_injuries" name="bodily_injuries">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="witnesses" class="col-sm-2 col-form-label">witnesses</label>
+                    <label for="witnesses" class="col-sm-2 col-form-label">Witness</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="witnesses" name="witnesses">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="police_report_available" class="col-sm-2 col-form-label">police_report_available</label>
+                    <label for="police_report_available" class="col-sm-2 col-form-label">Policy Report Available</label>
                     <div class="col-sm-10">
                         <select class="form-select" aria-label="Default select example" name="police_report_available">
                             <option selected>Open this select menu</option>
@@ -215,32 +219,32 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="total_claim_amount" class="col-sm-2 col-form-label">total_claim_amount</label>
+                    <label for="total_claim_amount" class="col-sm-2 col-form-label">Total Claim Amount</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="total_claim_amount" name="total_claim_amount" step="0.01">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="injury_claim" class="col-sm-2 col-form-label">injury_claim</label>
+                    <label for="injury_claim" class="col-sm-2 col-form-label">Injury Claim</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="injury_claim" name="injury_claim" step="0.01">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="property_claim" class="col-sm-2 col-form-label">property_claim</label>
+                    <label for="property_claim" class="col-sm-2 col-form-label">Property Claim</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="property_claim" name="property_claim" step="0.01">
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="vehicle_claim" class="col-sm-2 col-form-label">vehicle_claim</label>
+                    <label for="vehicle_claim" class="col-sm-2 col-form-label">Vehicle Claim</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="vehicle_claim" name="vehicle_claim" step="0.01">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary px-5">Submit</button>
+                </div>
             </form>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </body>
-</html>
+{% endblock %}

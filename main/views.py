@@ -1,7 +1,10 @@
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from django.http import JsonResponse
 from .utils import TrainModel, Predict
+from django.http import JsonResponse
 from .models import TrainedModels
+from django.urls import reverse
 import pickle
 import json
 
@@ -65,3 +68,21 @@ class PredictView(TemplateView):
         res = prediction.predict(eval(db['featured_columns']))
         print(res)
         return JsonResponse({'prediction': res}, status=200)
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        login(request, user)
+        return redirect(reverse('Home'))
+
+    elif request.method == 'GET':
+        return render(request, 'login.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('Home'))
+
