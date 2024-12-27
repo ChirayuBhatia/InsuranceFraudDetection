@@ -54,16 +54,15 @@ class PredictView(TemplateView):
 
     def post(self, request):
         db = self.model.objects.values().first()
-        # data = [request.post[k] for k in db['featured_columns']]
+        data = [request.post[k] for k in db['featured_columns']]
         model = pickle.loads(db['model'])
         label_encoders = pickle.loads(db['label_encoders'])
         scaler = pickle.loads(db['scaler'])
-        # for i in range(len(data)):
-        #     try:
-        #         data[i] = float(data[i])
-        #     except ValueError:
-        #         continue
-        data = [355, 47, 500/1000, 2000, 1273.7, 4000000, 'MALE', 'College', 'other-service', 'husband', 0,	0, 'Multi-vehicle Collision', 'Front Collision', 'Major Damage', 'Fire', 19, 3,	'NO', 2, 1,	'NO', 62800, 6280, 6280, 50240]
+        for i in range(len(data)):
+            try:
+                data[i] = float(data[i])
+            except ValueError:
+                continue
         prediction = Predict(data, model, label_encoders, scaler)
         res = prediction.predict(eval(db['featured_columns']))
         print(res)
